@@ -1,0 +1,56 @@
+﻿
+
+
+<div class="h-full flex items-center leading-[0]">
+	<div class="w-full flex gap-4 justify-center items-baseline">
+		<p class="font-bold text-nowrap @TextSizes[textSize]">
+			@if (s > 0)
+			{
+				<span class="font-medium">-</span>
+			}
+			@if (s > 3599)
+			{
+				<TimeDisplay Number="s / 3600"
+							 String="h "
+							 TextSize="textSize"
+							 TextSizes="TextSizes" />
+			}
+			@if (s > 59)
+			{
+				<TimeDisplay Number="(s / 60) % 60"
+							 String="m "
+							 TextSize="textSize"
+							 TextSizes="TextSizes" />
+			}
+			<TimeDisplay Number="s % 60"
+						 String="s"
+						 TextSize="textSize"
+						 TextSizes="TextSizes" />
+		</p>
+	</div>
+</div>
+
+
+
+@code {
+	[Parameter] public int s { get; set; }
+
+	int textSize => s > 3599 ? 3 : s > 59 ? 4 : 5;
+
+	Dictionary<double, string> TextSizes { get; set; } = new()
+	{
+		{ 1, "text-[1rem]" },
+		{ 1.5, "text-[1.5rem]" },
+		{ 2, "text-[2rem]" },
+		{ 2.5, "text-[2.5rem]" },
+		{ 3, "text-[3rem]" },
+		{ 3.5, "text-[3.5rem]" },
+		{ 4, "text-[4rem]" },
+		{ 4.5, "text-[4.5rem]" },
+		{ 5, "text-[5rem]" },
+		{ 5.5, "text-[5.5rem]" },
+		{ 6, "text-[6rem]" },
+		{ 6.5, "text-[6.5rem]" },
+		{ 7, "text-[7rem]" }
+	};
+}

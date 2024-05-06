@@ -1,0 +1,24 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer components {
+    .timer-wrapper {
+      @apply h-48 rounded-3xl flex flex-col items-center overflow-hidden shadow-md p-6 text-white;
+    }
+    .timer-title {
+        @apply w-full px-2 text-3xl flex justify-between items-baseline font-bold text-start text-white text-nowrap bg-green-500;
+    }
+    .timer-content-wrapper {
+        @apply w-full m-4 flex justify-evenly items-center text-white h-full;
+    }
+    .big-round-button {
+        @apply size-24 aspect-square flex items-center justify-center rounded-full hover:bg-completed-500;
+    }
+    .medium-round-button {
+        @apply size-16 aspect-square flex items-center justify-center rounded-full hover:bg-completed-500;
+    }
+    .small-round-button {
+        @apply size-12 aspect-square flex items-center justify-center rounded-full hover:bg-completed-500;
+    }
+  }

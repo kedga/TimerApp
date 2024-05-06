@@ -1,0 +1,18 @@
+﻿@if (Timer is null) throw new Exception("No timer object provided to timer component.");
+
+<div class="bg-paused-400 timer-wrapper">
+	<TimerTitle Timer="Timer" />
+	<div class="timer-content-wrapper">
+		<button class="big-round-button hover:bg-paused-300" @onclick="() => Timer.UnPause(Timer.Guid)">
+			<i class="fa-solid fa-play text-6xl"></i>
+		</button>
+		<button class="big-round-button hover:bg-paused-300" @onclick="() => Timer.Stop(Timer.Guid)">
+			<i class="fa-solid fa-stop text-6xl"></i>
+		</button>
+	</div>
+</div>
+
+@code {
+	[Parameter]
+	public TimerManager Timer { get; set; } = null!;
+}

@@ -1,0 +1,261 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>My Website</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Fira+Mono:wght@700&family=Montserrat:wght@400;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/all.min.css" integrity="sha512-z3gLpd7yknf1YoNbCzqRKc4qyor8gaKU1qmn+CShxbuBusANI9QpRohGBreCFkKxLhei6S9CQXFEbbKuqLg0DA==" crossorigin="anonymous" referrerpolicy="no-referrer" />
+    <!-- <link rel="stylesheet" href="https://localhost:7084/output.css"> -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="icon" href="./favicon.ico" type="image/x-icon">
+  </head>
+  <style>
+    @keyframes translateYAnimation {
+        0% {
+            transform: translateY(0);
+        }
+        10% {
+            transform: translateY(-50%);
+        }
+        90% {
+            transform: translateY(-50%);
+        }
+        100% {
+            transform: translateY(0px);
+        }
+    }
+
+    .animate {
+    animation-name: translateYAnimation;
+    animation-duration: 3s;
+    animation-timing-function: ease-in-out;
+    animation-fill-mode: forwards;
+    }
+
+    @keyframes translateYAnimationStart {
+        0% {
+            transform: translateY(0);
+        }
+        100% {
+            transform: translateY(-50%);
+        }
+    }
+
+    @keyframes translateYAnimationEnd {
+        0% {
+            transform: translateY(-50%);
+        }
+        100% {
+            transform: translateY(0);
+        }
+    }
+
+    .animate-start {
+    animation-name: translateYAnimationStart;
+    animation-duration: 200ms;
+    animation-timing-function: cubic-bezier(.05,.44,.37,1);
+    animation-fill-mode: forwards;
+    }
+
+    .animate-end {
+    animation-name: translateYAnimationEnd;
+    animation-duration: 500ms;
+    animation-timing-function: ease-out;
+    animation-fill-mode: forwards;
+    }
+</style>
+  <body class="bg-gray-50">
+    <header class="fixed top-0 w-full text-gray-700 shadow bg-white z-50">
+        <nav class="mx-auto px-8 h-16 flex items-center gap-2 w-full max-w-5xl justify-between text-lg font-semibold">
+            <a class="hover:underline" href="index.html">
+                Produkter
+            </a>
+            
+            <div class="flex items-center gap-1">
+                <span>Valuta:</span>
+                <select class="hover:underline cursor-pointer" id="currency" name="currency">
+                    <option value="SEK">SEK</option>
+                    <option value="EUR">EUR</option>
+                    <option value="USD">USD</option>
+                    <option value="GBP">GBP</option>
+                </select>
+                <!-- <span class="fi fi-se fi"></span> -->
+            </div>
+            
+            <div class="">
+                <a class="pr-2 border-r hover:underline" href="">
+                    Logga in
+                </a>
+                <a class="pl-3 hover:underline" href="">
+                    Registrera dig<span class="fi fi-gr fis"></span>
+                </a>
+            </div>
+            
+            <div class="flex flex-col items-end border-l pl-5 text-base">
+                <p class="">
+                    Inloggad: apansfarmor@apa.com
+                </p>
+                <div class="w-full flex justify-end gap-4">
+                    <a class="hover:underline text-cyan-600 hover:text-cyan-700" href="cart.html">
+                        Kundvagn
+                    </a>
+                    <button href="" class="hover:underline text-gray-400 hover:text-gray-700">Logga ut</button>
+                </div>
+                
+            </div>
+        
+        </nav>
+    </header>
+
+        <main class="max-w-5xl mx-auto mt-16 p-8 flex flex-col items-center gap-8 w-full text-gray-500">
+            <div class="grid md:grid-cols-3 sm:grid-cols-2 gap-8 w-full">
+                <div class="bg-white text-gray-600 shadow rounded-xl transition duration-100 hover:shadow-lg w-full relative">
+                    <button class="w-full">
+                        <img src="img/apple.jpg" alt="apple" class="w-full h-44 object-cover rounded-t-xl">
+                    </button>
+                    
+                    <div class="m-4 mt-2 flex flex-col gap-2">
+                        <div class="flex justify-between items-center">
+                            <a href="" class="text-lg font-bold text-gray-600 hover:text-gray-800">
+                                Äpple
+                            </a>
+                            <button class="bg-cyan-600 size-10 rounded aspect-square flex justify-center items-center hover:bg-cyan-700 default-transition">
+                                <i class="fa-solid fa-basket-shopping fa-lg text-white"></i>
+                            </button>
+                        </div>
+                        
+                        <div class="flex justify-between items-center -mb-2">
+                            <div class="relative">
+                                <!-- <p class="absolute text-gray-400 -top-2 text-xs line-through">
+                                    29 kr
+                                </p> -->
+                                <p class="text-lg font-semibold text-gray-600">
+                                    49 kr
+                                </p>
+                            </div>
+                            <div class="flex items-center gap-1 ">
+                                <svg class="size-5 stroke-green-600" data-slot="icon" fill="none" stroke-width="2" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+                                    <path stroke-linecap="round" stroke-linejoin="round" d="M9 12.75 11.25 15 15 9.75M21 12a9 9 0 1 1-18 0 9 9 0 0 1 18 0Z"></path>
+                                  </svg>
+                                <p><span class="font-semibold">84 st</span> i lager</p>
+                            </div>
+                        </div>
+                    </div>
+                    <!-- <div class="sale-sticker">
+                        <p>
+                            -20 kr
+                        </p>
+                    </div> -->
+                </div>
+                <div class="bg-white text-gray-600 shadow rounded-xl transition duration-100 hover:shadow-lg w-full relative">
+                    <button class="w-full">
+                        <img src="img/bonsai-sm.jpg" alt="apple" class="w-full h-44 object-cover rounded-t-xl">
+                    </button>
+                    
+                    <div class="m-4 mt-2 flex flex-col gap-2">
+                        <div class="flex justify-between items-center">
+                            <a href="" class="text-lg font-bold text-gray-600 hover:text-gray-800">
+                                Bonsaiträd
+                            </a>
+                            <button class="bg-gray-300 size-10 rounded aspect-square flex justify-center items-center" disabled>
+                                <i class="fa-solid fa-basket-shopping fa-lg text-white"></i>
+                            </button>
+                        </div>
+                        
+                        <div class="flex justify-between items-center -mb-2">
+                            <div class="relative">
+                                <!-- <p class="absolute text-gray-400 -top-2 text-xs line-through">
+                                    29 kr
+                                </p> -->
+                                <p class="text-lg font-semibold text-gray-600">
+                                    249 kr
+                                </p>
+                            </div>
+                            <div class="flex items-center gap-1 ">
+                                <svg class="size-5 stroke-red-400" data-slot="icon" fill="none" stroke-width="2" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+                                    <path stroke-linecap="round" stroke-linejoin="round" d="m9.75 9.75 4.5 4.5m0-4.5-4.5 4.5M21 12a9 9 0 1 1-18 0 9 9 0 0 1 18 0Z"></path>
+                                  </svg>
+                                <p><span class="font-semibold">0 st</span> i lager</p>
+                            </div>
+                        </div>
+                    </div>
+                    <!-- <div class="sale-sticker">
+                        <p>
+                            -20 kr
+                        </p>
+                    </div> -->
+                </div>
+                <div class="bg-white text-gray-600 shadow rounded-xl transition duration-100 hover:shadow-lg w-full relative">
+                    <img src="img/cat-sm.jpg" alt="apple" class="w-full h-44 object-cover rounded-t-xl">
+                    <div class="m-4 flex flex-col gap-2">
+                        <div class="flex justify-between items-center">
+                            <a href="" class="text-lg font-bold text-gray-600 hover:text-gray-800">
+                                Katt
+                            </a>
+                            <div class="size-10 overflow-hidden rounded">
+                                <div id="animationContainer" class="">
+                                    <button id="cartButton" class="bg-cyan-600 size-10 aspect-square flex justify-center items-center hover:bg-cyan-700 default-transition">
+                                        <i class="fa-solid fa-basket-shopping fa-lg text-white"></i>
+                                    </button>
+                                    <div class="bg-green-600 size-10 aspect-square flex justify-center items-center">
+                                        <i class="fa-solid fa-check fa-lg text-white"></i>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="flex justify-between items-center -mb-1">
+                            <div class="relative">
+                                <p class="absolute text-gray-400 -top-2 text-xs line-through">
+                                    49 kr
+                                </p>
+                                <p class="text-lg font-bold text-red-600">
+                                    29 kr
+                                </p>
+                            </div>
+                            <div class="flex items-center gap-1 ">
+                                <svg class="size-5 stroke-green-600" data-slot="icon" fill="none" stroke-width="2" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+                                    <path stroke-linecap="round" stroke-linejoin="round" d="M9 12.75 11.25 15 15 9.75M21 12a9 9 0 1 1-18 0 9 9 0 0 1 18 0Z"></path>
+                                  </svg>
+                                <p><span class="font-semibold">22 st</span> i lager</p>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="absolute -top-2 -right-2 bg-red-600 rounded-full aspect-square text-white text-lg font-semibold p-1 flex flex-col justify-center items-center rotate-6 opacity-90 border-2 border-white shadow-md">
+                        <p>
+                            -20 kr
+                        </p>
+                    </div>
+                </div>
+                <div class="bg-white text-gray-600 shadow rounded-xl transition duration-100 hover:shadow-lg w-full relative">
+                    <img src="img/car-sm.jpg" alt="apple" class="w-full h-44 object-cover">
+                    <div class="m-4">
+                        <p class="text-lg font-bold text-gray-600">Bil</p>
+                        <p class="text-sm">200 000 kr</p>
+                    </div>
+                </div>
+            </div>
+        </main>
+  </body>
+  <script>
+    document.getElementById('cartButton').addEventListener('click', function() {
+        var animationContainer = document.getElementById('animationContainer');
+        animationContainer.classList.remove('animate-end');
+        animationContainer.classList.add('animate-start');
+        setTimeout(function () {
+            animationContainer.classList.remove('animate-start');
+            animationContainer.classList.add('animate-end');
+        }, 2000);
+        setTimeout(function () {
+            animationContainer.classList.remove('animate-end');
+        }, 2500);
+    });
+  </script>
+</html>

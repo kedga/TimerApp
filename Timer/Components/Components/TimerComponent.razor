@@ -1,0 +1,101 @@
+﻿@inject TimerService TimerService
+@implements IDisposable
+
+
+@if (Timer is null) throw new Exception("No timer object provided to timer component.");
+
+<div class="flex flex-col @opacity @saturate @actualHueRotate fade-slow">
+	<div class="group rounded-3xl overflow-hidden @CssClasses.GetBaseColorClass(Timer) hover:@CssClasses.GetContainerHoverColorClass(Timer) fade-slow">
+		<TimerRunning Timer="Timer" Visible="Timer.Status == TimerStatus.Running" />
+		<TimerStopped Timer="Timer" Visible="Timer.Status == TimerStatus.Stopped" />
+		<TimerEdit Timer="Timer" Visible="Timer.Status == TimerStatus.Edit" />
+	</div>
+</div>
+
+@code {
+	[Parameter]
+	public TimerManager Timer { get; set; } = null!;
+
+	[Parameter]
+	public Action? OnCompleted { get; set; }
+
+	[Parameter]
+	public Action? OnTimerStatusChanged { get; set; }
+
+	public TimerStatus TimerStatus { get; set; } = TimerStatus.Stopped;
+
+	string opacity = "opacity-0";
+
+	string saturate = "saturate-100";
+
+	string baseHueRotate = "hue-rotate-0";
+
+	string actualHueRotate = "hue-rotate-0";
+
+	// List<string> hueRotates = ["hue-rotate-0", "hue-rotate-[4deg]", "hue-rotate-[8deg]", "hue-rotate-[12deg]", "hue-rotate-[16deg]", "hue-rotate-[20deg]", "hue-rotate-[24deg]", "hue-rotate-[28deg]", "hue-rotate-[32deg]", "hue-rotate-[36deg]", "hue-rotate-[40deg]", "hue-rotate-[44deg]", "hue-rotate-[48deg]", "hue-rotate-[52deg]", "hue-rotate-[56deg]", "hue-rotate-[60deg]", "hue-rotate-[64deg]", "hue-rotate-[68deg]", "hue-rotate-[72deg]", "hue-rotate-[76deg]", "hue-rotate-[80deg]", "hue-rotate-[84deg]", "hue-rotate-[88deg]", "hue-rotate-[92deg]", "hue-rotate-[96deg]", "hue-rotate-[100deg]", "hue-rotate-[104deg]", "hue-rotate-[108deg]", "hue-rotate-[112deg]", "hue-rotate-[116deg]", "hue-rotate-[120deg]", "hue-rotate-[124deg]", "hue-rotate-[128deg]", "hue-rotate-[132deg]", "hue-rotate-[136deg]", "hue-rotate-[140deg]", "hue-rotate-[144deg]", "hue-rotate-[148deg]", "hue-rotate-[152deg]", "hue-rotate-[156deg]", "hue-rotate-[160deg]", "hue-rotate-[164deg]", "hue-rotate-[168deg]", "hue-rotate-[172deg]", "hue-rotate-[176deg]", "hue-rotate-[180deg]"];
+
+	List<string> hueRotates = ["hue-rotate-0", "hue-rotate-[1deg]", "hue-rotate-[2deg]", "hue-rotate-[3deg]", "hue-rotate-[4deg]", "hue-rotate-[5deg]", "hue-rotate-[6deg]", "hue-rotate-[7deg]", "hue-rotate-[8deg]", "hue-rotate-[9deg]", "hue-rotate-[10deg]", "hue-rotate-[11deg]", "hue-rotate-[12deg]", "hue-rotate-[13deg]", "hue-rotate-[14deg]", "hue-rotate-[15deg]", "hue-rotate-[16deg]", "hue-rotate-[17deg]", "hue-rotate-[18deg]", "hue-rotate-[19deg]", "hue-rotate-[20deg]"];
+
+	Random random = new();
+
+	protected override async Task OnAfterRenderAsync(bool firstRender)
+	{
+		if (firstRender)
+		{
+			Timer.StateChanged += TimerStateChanged;
+
+			Timer.OnCompleted += OnCompleted;
+
+			await Task.Delay(10);
+
+			opacity = "opacity-100";
+
+			var random = new Random();
+
+			baseHueRotate = actualHueRotate = hueRotates[random.Next(hueRotates.Count)];
+
+			StateHasChanged();
+		}
+	}
+
+	private async void TimerStateChanged()
+	{
+		await InvokeAsync(StateHasChanged);
+
+		if (TimerStatus != Timer.Status)
+		{
+			TimerStatus = Timer.Status;
+
+			OnTimerStatusChanged?.Invoke();
+		}
+	}
+
+	public async void StateCheck(bool someTimerIsRunning)
+	{
+		TimerStatus = Timer.Status;
+
+		if (Timer.Status == TimerStatus.Stopped && someTimerIsRunning)
+		{
+			saturate = "saturate-[0.75]";
+
+			opacity = "opacity-75";
+		}
+		else
+		{
+			saturate = "saturate-100";
+
+			opacity = "opacity-100";
+		}
+
+		await InvokeAsync(StateHasChanged);
+
+		actualHueRotate = TimerStatus == TimerStatus.Stopped ? baseHueRotate : "hue-rotate-0";
+
+		await InvokeAsync(StateHasChanged);
+	}
+
+	public void Dispose()
+	{
+		Timer.StateChanged -= TimerStateChanged;
+	}
+}

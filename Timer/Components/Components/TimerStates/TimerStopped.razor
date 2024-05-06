@@ -1,0 +1,75 @@
+﻿@inject TimerService TimerService
+
+@implements IDisposable
+
+@if (Timer is null) throw new Exception("No timer object provided to timer component.");
+
+<div class="timer-wrapper @visible">
+	<TimerTitle Timer="Timer" />
+	<div class="timer-content-wrapper">
+		<button class="medium-round-button @hoverColor @fadeSpeed" @onclick="Delete">
+			<i class="fa-regular fa-trash-can text-3xl"></i>
+		</button>
+		<button class="big-round-button @hoverColor @fadeSpeed" @onclick="Start">
+			<i class="fa-solid fa-play text-6xl translate-x-[3px]"></i>
+		</button>
+		<button class="medium-round-button @hoverColor @fadeSpeed" @onclick="Edit">
+			<i class="fa-solid fa-pen-to-square text-3xl"></i>
+		</button>
+	</div>
+</div>
+
+@code {
+	[Parameter]
+	public TimerManager Timer { get; set; } = null!;
+
+	[Parameter]
+	public bool Visible { get; set; }
+
+	string visible => Visible ? "visible static" : "invisible absolute";
+
+	string fadeSpeed = "fade";
+
+	string hoverColor => CssClasses.GetHoverColorClass(Timer);
+
+	protected override void OnInitialized()
+	{
+		Timer.StateChanged += HandleStateChanged;
+	}
+
+	private async void HandleStateChanged()
+	{
+		fadeSpeed = "fade-slow";
+
+		await InvokeAsync(StateHasChanged);
+
+		if (Timer.Status == TimerStatus.Stopped)
+		{
+			await Task.Delay(500);
+
+			fadeSpeed = "fade";
+
+			await InvokeAsync(StateHasChanged);
+		}
+	}
+
+	async Task Start()
+	{
+		await Timer.Start(Timer.Guid);
+	}
+
+	async Task Edit()
+	{
+		await Timer.Edit(Timer.Guid);
+	}
+
+	async Task Delete()
+	{
+		await TimerService.DeleteTimer(Timer.Id);
+	}
+
+	public void Dispose()
+	{
+		Timer.StateChanged -= HandleStateChanged;
+	}
+}

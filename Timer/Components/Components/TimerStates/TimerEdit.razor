@@ -1,0 +1,64 @@
+﻿@using System.Text.RegularExpressions
+@inject TimerService TimerService
+
+@if (Timer is null) throw new Exception("No timer object provided to timer component.");
+
+<div class="timer-wrapper @visible">
+	<TimerEditInput @key="Timer" Timer="Timer" Visible="Visible" StateChanged="StateHasChanged" onEnter="Save">
+		<i class="fa-solid fa-question mx-auto my-auto text-2xl"></i>
+	</TimerEditInput>
+	<div class="flex justify-between w-full items-center text-4xl font-semibold">
+
+		<button class="small-round-button hover:bg-edit-400 fade" @onclick="Delete">
+			<i class="fa-solid fa-trash-can mx-auto my-auto text-2xl"></i>
+		</button>
+
+		@if (Timer.TimeLimit > 0)
+		{
+			<div class="w-full text-center opacity-50">@Timer.TimeLimit.GetTimeString(true)</div>
+		}
+
+		<button class="small-round-button hover:bg-edit-400 fade" @onclick="Save">
+			<i class="fa-solid fa-check mx-auto my-auto text-3xl"></i>
+		</button>
+
+	</div>
+</div>
+
+@code {
+	[Parameter]
+	public TimerManager Timer { get; set; } = null!;
+
+	[Parameter]
+	public bool Visible { get; set; }
+
+	string visible => Visible ? "visible static" : "invisible absolute";
+
+	bool loading = false;
+
+	async void Save()
+	{
+		if (loading) return;
+
+		loading = true;
+
+		await TimerService.SaveTimers();
+
+		await Timer.Stop(Timer.Guid);
+
+		loading = false;
+	}
+
+	async Task Delete()
+	{
+		if (loading) return;
+
+		loading = true;
+
+		await TimerService.DeleteTimer(Timer.Id);
+
+		loading = false;
+	}
+
+
+}

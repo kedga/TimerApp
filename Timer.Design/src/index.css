@@ -1,0 +1,33 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer components {
+    .timer-wrapper {
+      @apply h-48 flex flex-col items-center overflow-hidden shadow-md p-4 border-4 text-white border-transparent;
+    }
+    .timer-title {
+        @apply w-full px-2 text-3xl flex justify-between items-baseline font-bold text-start text-nowrap bg-green-500;
+    }
+    .timer-content-wrapper {
+        @apply w-full m-4 flex justify-evenly items-center h-full;
+    }
+    .big-round-button {
+        @apply size-24 aspect-square flex items-center justify-center rounded-full;
+    }
+    .medium-round-button {
+        @apply size-16 aspect-square flex items-center justify-center rounded-full;
+    }
+    .small-round-button {
+        @apply size-12 aspect-square flex items-center justify-center rounded-full;
+    }
+    .fade {
+        @apply transition duration-100;
+    }
+    .fade-slow {
+        @apply transition duration-500;
+    }
+    .fade-opacity {
+        @apply opacity-75;
+    }
+  }

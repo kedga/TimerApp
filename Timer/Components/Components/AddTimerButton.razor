@@ -1,0 +1,42 @@
+﻿@inject TimerService TimerService
+
+<div class="h-full w-full flex justify-center items-center @opacity @saturate fade-slow">
+	<button @onclick="TimerService.AddTimer" class="bg-add-500 hover:bg-add-400 size-32 aspect-square rounded-full flex justify-center text-white fade">
+		<i class="fa-solid fa-plus mx-auto my-auto text-7xl"></i>
+	</button>
+</div>
+@code {
+	string opacity = "opacity-0";
+
+	string saturate = "saturate-100";
+
+	protected override async Task OnAfterRenderAsync(bool firstRender)
+	{
+		if (firstRender)
+		{
+			await Task.Delay(10);
+
+			opacity = "opacity-100";
+
+			await InvokeAsync(StateHasChanged);
+		}
+	}
+
+	public async Task StateCheck(bool someTimerIsRunning)
+	{
+		if (someTimerIsRunning)
+		{
+			saturate = "saturate-[0.5]";
+
+			opacity = "opacity-50";
+		}
+		else
+		{
+			saturate = "saturate-100";
+
+			opacity = "opacity-100";
+		}
+
+		await InvokeAsync(StateHasChanged);
+	}
+}

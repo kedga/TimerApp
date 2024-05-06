@@ -1,0 +1,56 @@
+﻿
+
+
+<div class="w-full h-full flex gap-4 justify-center items-center">
+	<p class="leading-[0] font-bold text-nowrap @TextSizes[textSize]">
+		@if (s < 0)
+		{
+			<span>-</span>
+		}
+		@if (absolute > 3599)
+		{
+			<TimeDisplay Number="absolute / 3600"
+						 String="h "
+						 TextSize="s > 0 ? textSize : textSize - 1"
+						 TextSizes="TextSizes" />
+		}
+		@if (absolute > 59)
+		{
+			<TimeDisplay Number="(absolute / 60) % 60"
+						 String="m "
+						 TextSize="s > 0 ? textSize : textSize - 1"
+						 TextSizes="TextSizes" />
+		}
+		<TimeDisplay Number="absolute % 60"
+					 String="s"
+					 TextSize="s > 0 ? textSize : textSize - 1"
+					 TextSizes="TextSizes" />
+	</p>
+</div>
+
+
+
+@code {
+	[Parameter] public int s { get; set; }
+
+	int absolute => Math.Abs(s);
+
+	int textSize => absolute > 3599 ? 4 : absolute > 59 ? 6 : 7;
+
+	Dictionary<double, string> TextSizes { get; set; } = new()
+	{
+		{ 1, "text-[2.5rem]" },
+		{ 1.5, "text-[2.75rem]" },
+		{ 2, "text-[3rem]" },
+		{ 2.5, "text-[3.25rem]" },
+		{ 3, "text-[3.5rem]" },
+		{ 3.5, "text-[3.75rem]" },
+		{ 4, "text-[4rem]" },
+		{ 4.5, "text-[4.5rem]" },
+		{ 5, "text-[5rem]" },
+		{ 5.5, "text-[5.5rem]" },
+		{ 6, "text-[6rem]" },
+		{ 6.5, "text-[6.5rem]" },
+		{ 7, "text-[7rem]" }
+	};
+}

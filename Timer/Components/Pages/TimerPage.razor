@@ -1,0 +1,89 @@
+﻿@page "/"
+@using Microsoft.AspNetCore.SignalR.Client
+
+@implements IDisposable
+
+@inject TimerService TimerService
+@inject NavigationManager NavigationManager
+@inject TimerService TimerService
+@inject IJSRuntime JSRuntime
+
+<div class="grid grid-cols-[repeat(auto-fit,minmax(350px,1fr))] gap-8">
+	@foreach (var timer in TimerService.Timers)
+	{
+		<TimerComponent @ref="@TimerComponentRef" Timer="timer" @key="timer.Id" OnCompleted="HandleTimerComplete" OnTimerStatusChanged="HandleTimerStatusChanged" />
+	}
+	<AddTimerButton @ref="@AddTimerRef" />
+</div>
+
+@* <button @onclick="StateHasChanged">refresh</button> *@
+
+<audio id="beepAudio" src="/audio/Alarm05.wav" autostart="false" loop></audio>
+
+@code {
+	private List<TimerComponent> _timerComponentRefs = new();
+	public TimerComponent TimerComponentRef { set => _timerComponentRefs.Add(value); }
+
+	public AddTimerButton? AddTimerRef { get; set; }
+
+	CancellationTokenSource? cancellationTokenSource;
+
+	Action? CheckIfRunning;
+
+	protected override async Task OnInitializedAsync()
+	{
+		await TimerService.Initialize();
+
+		TimerService.StateChanged += TimerStateChanged;
+	}
+
+	void HandleTimerStatusChanged()
+	{
+		var atLeastOneTimerRunning = _timerComponentRefs.Any(t => t.TimerStatus == TimerStatus.Running);
+
+		Console.WriteLine("HandleTimerStatusChanged, atLeastOneTimerRunning: " + atLeastOneTimerRunning);
+
+		foreach (var timerComponent in _timerComponentRefs)
+		{
+			timerComponent.StateCheck(atLeastOneTimerRunning);
+		}
+
+		AddTimerRef?.StateCheck(atLeastOneTimerRunning);
+	}
+
+	private async void TimerStateChanged()
+	{
+		await InvokeAsync(StateHasChanged);
+	}
+
+	public void Dispose()
+	{
+		cancellationTokenSource?.Cancel();
+
+		TimerService.StateChanged -= TimerStateChanged;
+	}
+
+	async void HandleTimerComplete()
+	{
+		cancellationTokenSource = new CancellationTokenSource();
+
+		await JSRuntime.InvokeVoidAsync("playBeepSound");
+
+		await JSRuntime.InvokeVoidAsync("setBeepVolume", 1);
+
+		try
+		{
+			await Task.Delay(15000, cancellationTokenSource.Token);
+		}
+		catch (TaskCanceledException)
+		{
+			Console.WriteLine("Fade delay was canceled");
+			return;
+		}
+
+		if (!cancellationTokenSource.Token.IsCancellationRequested)
+		{
+			await JSRuntime.InvokeVoidAsync("fadeBeepVolume", 0.1, 5);
+		}
+	}
+}

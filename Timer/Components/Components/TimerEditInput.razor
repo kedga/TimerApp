@@ -1,0 +1,199 @@
+﻿@using System.Text.RegularExpressions
+@using System.Globalization
+@inject IJSRuntime JSRuntime
+@if (Timer is null) throw new Exception("No timer object provided to timer component.");
+
+<div class="w-full">
+	<div class="w-full text-3xl flex justify-between items-baseline select-none font-bold text-start">
+		<input spellcheck="false" placeholder="timer name..." @bind="Timer.Name" @ref="nameInput"
+			   class="w-full @colorClass border-none outline-none shadow-inner rounded-xl px-4 text-center placeholder:text-white placeholder:opacity-30 placeholder:font-semibold fade-slow" />
+	</div>
+	<div class="w-full py-4 flex justify-evenly gap-4 text-white text-3xl font-semibold">
+		<div class="w-full flex gap-4 items-center">
+
+			<input spellcheck="false" placeholder="time limit..." maxlength="9" @bind="Input" @bind:event="oninput" @onkeypress="HandleKeyPress" @onkeydown:preventDefault
+				   class="w-full h-fit @(success && Visible ? "bg-green-500" : @colorClass) outline-none shadow-inner rounded-xl px-2 text-center placeholder:text-white placeholder:opacity-30 fade-slow" />
+		</div>
+	</div>
+</div>
+
+<script>
+	// Define a JavaScript function to select the text inside the input field
+	window.selectText = function (element) {
+		element.setSelectionRange(0, element.value.length);
+	};
+
+</script>
+
+@code {
+	[Parameter]
+	public RenderFragment? ChildContent { get; set; }
+
+	[Parameter]
+	public TimerManager Timer { get; set; } = null!;
+
+	[Parameter]
+	public bool Visible { get; set; }
+
+	[Parameter]
+	public Action? StateChanged { get; set; }
+
+	[Parameter]
+	public Action? onEnter { get; set; }
+
+	private ElementReference nameInput;
+
+	protected override async Task OnAfterRenderAsync(bool firstRender)
+	{
+		if (firstRender)
+		{
+			await nameInput.FocusAsync();
+
+			await JSRuntime.InvokeVoidAsync("selectText", nameInput);
+		}
+	}
+
+	string colorClass => CssClasses.GetLighterColorClass(Timer);
+
+	bool success => totalSeconds > 0;
+
+	public string Input { get => _input; 
+		set 
+		{ 
+			_input = value; 
+			(message, totalSeconds) = EvaluateInput(value); 
+			Console.WriteLine("\n" + message); 
+		} 
+	}
+
+	string _input = string.Empty;
+
+	string message { get; set; } = "Syntax OK";
+
+	int _totalSeconds;
+	int totalSeconds { get => _totalSeconds; 
+		set 
+		{ 
+			_totalSeconds = value;
+			if (value > 0) Timer.TimeLimit = value;
+			else Timer.TimeLimit = 0;
+			StateChanged?.Invoke();
+		} 
+	}
+
+	public (string, int) EvaluateInput(string input)
+	{
+		double s = 0;
+		double m = 0;
+		double h = 0;
+
+		input = input.Trim();
+
+		input = input.Replace(",", ".");
+
+		if (Regex.IsMatch(input, @"^\d+$"))
+		{
+			return ("numbers only, " + input + " seconds", int.Parse(input));
+		}
+
+		if (Regex.IsMatch(input, @"^[0-9 :.]+$"))
+		{
+			string[] substrings;
+
+			if (input.Contains(':')) 
+			{
+				input = Regex.Replace(input, @"\s+", "");
+
+				substrings = input.Split(':', StringSplitOptions.RemoveEmptyEntries);
+			}
+
+			else substrings = input.Split(' ', StringSplitOptions.RemoveEmptyEntries);
+
+			substrings = [.. substrings.Where(s => s.Length > 0).Select(s =>
+			{
+				if (s[0] == '.') return "0" + s;
+
+				if (s[s.Length - 1] == '.') return s + "0";
+
+				else return s;
+			})];
+
+			if (substrings.Length < 4 && substrings.Length > 0)
+			{
+				s = double.Parse(substrings[substrings.Length - 1], CultureInfo.InvariantCulture);
+
+				if (substrings.Length > 1)
+				{
+					m = double.Parse(substrings[substrings.Length - 2], CultureInfo.InvariantCulture);
+
+					if (substrings.Length > 2)
+					{
+						h = double.Parse(substrings[substrings.Length - 3], CultureInfo.InvariantCulture);
+					}
+				}
+			}
+			else
+			{
+				return ("Too many substrings (or none)", -1);
+			}
+		}
+		else
+		{
+			input = Regex.Replace(input, @"\s+", "");
+
+			if (!Regex.IsMatch(input, @"^(?!(.*s){2})(?!(.*m){2})(?!(.*h){2})[0-9mhs.]+$"))
+			{
+				return ("Failed check: only numbers, periods, and at most one occurrence each of s, m, h.", -1);
+			}
+
+			var substrings = Regex.Split(input, @"([0-9.]+[smh])").ToList();
+
+			substrings = [.. substrings.Where(s => s.Length > 0).Select(s =>
+			{
+				if (s[0] == '.') return "0" + s;
+
+				else return s;
+			})];
+
+			foreach (var substring in substrings)
+			{
+				if (substring.Length < 2) return ("substring length less than 2: " + substring, -1);
+
+				if (!Regex.IsMatch(substring, @"^\d+(\.\d+)?[smh]$")) return ("substring is not numbers + s or m or h: " + substring, -1);
+			}
+
+			var seconds = substrings.Where(s => s.Contains('s')).FirstOrDefault() ?? "0s";
+			var minutes = substrings.Where(s => s.Contains('m')).FirstOrDefault() ?? "0m";
+			var hours = substrings.Where(s => s.Contains('h')).FirstOrDefault() ?? "0h";
+
+			s = double.Parse(Regex.Replace(seconds, @"[^0-9.]+", ""), CultureInfo.InvariantCulture);
+			m = double.Parse(Regex.Replace(minutes, @"[^0-9.]+", ""), CultureInfo.InvariantCulture);
+			h = double.Parse(Regex.Replace(hours, @"[^0-9.]+", ""), CultureInfo.InvariantCulture);
+		}
+
+		var result = 0;
+
+		try
+		{
+			checked
+			{
+				result = Convert.ToInt32(Math.Floor(s + m * 60 + h * 3600));
+			}
+		}
+		catch (OverflowException)
+		{
+			return ("Time too large. Conversion resulted in an overflow.", -1);
+		}
+
+		return ("success:\n  seconds: " + s + "\n  minutes: "
+		+ m + "\n  hours: " + h + "\n  total: " + result + " seconds", result);
+	}
+
+	void HandleKeyPress(KeyboardEventArgs e)
+	{
+		if (e.Key == "Enter")
+		{
+			onEnter?.Invoke();
+		}
+	}
+}

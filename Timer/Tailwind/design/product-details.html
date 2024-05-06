@@ -1,0 +1,302 @@
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/all.min.css" integrity="sha512-z3gLpd7yknf1YoNbCzqRKc4qyor8gaKU1qmn+CShxbuBusANI9QpRohGBreCFkKxLhei6S9CQXFEbbKuqLg0DA==" crossorigin="anonymous" referrerpolicy="no-referrer" />
+    <!-- <link rel="stylesheet" href="https://localhost:7084/output.css"> -->
+</head>
+<style>
+    @keyframes translateYAnimationStart {
+        0% {
+            transform: translateY(0);
+        }
+        100% {
+            transform: translateY(-50%);
+        }
+    }
+
+    @keyframes translateYAnimationEnd {
+        0% {
+            transform: translateY(-50%);
+        }
+        100% {
+            transform: translateY(0);
+        }
+    }
+
+    .animate-start {
+    animation-name: translateYAnimationStart;
+    animation-duration: 200ms;
+    animation-timing-function: ease-out;
+    animation-fill-mode: forwards;
+    }
+
+    .animate-end {
+    animation-name: translateYAnimationEnd;
+    animation-duration: 500ms;
+    animation-timing-function: ease-out;
+    animation-fill-mode: forwards;
+    }
+</style>
+<body class="bg-gray-50 flex flex-col items-center">
+    <header class="fixed top-0 w-full text-gray-700 shadow bg-white z-50">
+        <nav class="mx-auto px-8 h-16 flex items-center gap-2 w-full max-w-5xl justify-between text-lg font-semibold">
+            <a class="hover:underline" href="index.html">
+                Produkter
+            </a>
+            
+            <div class="flex items-center gap-1">
+                <span>Valuta:</span>
+                <select class="hover:underline cursor-pointer" id="currency" name="currency">
+                    <option value="SEK">SEK</option>
+                    <option value="EUR">EUR</option>
+                    <option value="USD">USD</option>
+                    <option value="GBP">GBP</option>
+                </select>
+                <!-- <span class="fi fi-se fi"></span> -->
+            </div>
+            
+            <div class="">
+                <a class="pr-2 border-r hover:underline" href="">
+                    Logga in
+                </a>
+                <a class="pl-3 hover:underline" href="">
+                    Registrera dig<span class="fi fi-gr fis"></span>
+                </a>
+            </div>
+            
+            <div class="flex flex-col items-end border-l pl-5 text-base">
+                <p class="">
+                    Inloggad: apansfarmor@apa.com
+                </p>
+                <div class="w-full flex justify-end gap-4">
+                    <a class="hover:underline text-cyan-600 hover:text-cyan-700" href="cart.html">
+                        Kundvagn
+                    </a>
+                    <button href="" class="hover:underline text-gray-400 hover:text-gray-700">Logga ut</button>
+                </div>
+                
+            </div>
+        
+        </nav>
+    </header>
+
+    <main class="mt-16 p-8 flex flex-col items-center gap-8 max-w-5xl w-full text-gray-500">
+        <div class="grid sm:grid-cols-2 gap-8 w-full">
+            <div class="w-full">
+                <div class="relative bg-white max-h-full max-w-full aspect-square flex items-center justify-center rounded-xl shadow">
+                    <img src="img/cat-sm.jpg" alt="kitty" class="max-w-full max-h-full">
+                    <div class="absolute -top-2 -right-2 bg-red-600 rounded-full aspect-square text-white text-2xl font-semibold p-1 flex flex-col justify-center items-center rotate-6 opacity-90 border-2 border-white shadow-md">
+                        <p>
+                            -20%
+                        </p>
+                    </div>
+                </div>
+            </div>
+            <div class="flex flex-col gap-3">
+                <h2 class="text-3xl font-bold text-gray-700">Katt</h2>
+                <p class="text-lg">
+                    Fluffy animal. Might be cuddly or bitey.
+                </p>
+                
+                <div class="relative flex flex-col gap-1">
+                    <p class="absolute text-gray-400 -top-3 text-sm line-through text-nowrap">
+                        4 999 kr
+                    </p>
+                    <p class="text-xl font-bold text-gray-700">
+                        29 kr
+                    </p>
+                    <div class="flex items-center gap-1 ">
+                        <svg class="size-5 stroke-red-400" data-slot="icon" fill="none" stroke-width="2" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+                            <path stroke-linecap="round" stroke-linejoin="round" d="m9.75 9.75 4.5 4.5m0-4.5-4.5 4.5M21 12a9 9 0 1 1-18 0 9 9 0 0 1 18 0Z"></path>
+                          </svg>
+                        <p><span class="font-semibold">0 st</span> i lager</p>
+                    </div>
+                    <!-- <div class="flex items-center gap-1 ">
+                        <svg class="size-5 stroke-green-600" data-slot="icon" fill="none" stroke-width="2" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+                            <path stroke-linecap="round" stroke-linejoin="round" d="M9 12.75 11.25 15 15 9.75M21 12a9 9 0 1 1-18 0 9 9 0 0 1 18 0Z"></path>
+                          </svg>
+                        <p><span class="font-semibold">22 st</span> i lager</p>
+                    </div> -->
+                </div>
+               
+                <div class="flex gap-2">
+                    
+                    <div class="border border-gray-500 rounded-full flex gap-3 items-center p-2 grow-0 w-min">
+                        <button class="hover:bg-slate-200 rounded-full size-8 flex items-center justify-center">
+                            <svg class="w-4" data-slot="icon" fill="none" stroke-width="2" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+                                <path stroke-linecap="round" stroke-linejoin="round" d="M5 12h14"></path>
+                            </svg>
+                        </button>
+                        
+                        <span class="font-bold">1</span>
+                        
+                        <button class="hover:bg-slate-200 rounded-full size-8 flex items-center justify-center">
+                            <svg class="w-4" data-slot="icon" fill="none" stroke-width="2" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+                                <path stroke-linecap="round" stroke-linejoin="round" d="M12 4.5v15m7.5-7.5h-15"></path>
+                            </svg>
+                        </button>
+                    </div>
+
+                    <div class="grow overflow-hidden rounded-full shadow h-12 w-full">
+                        <div id="animationContainer" class="h-24 w-full">
+                            <button id="cartButton" class="h-12 w-full font-bold text-gray-100 bg-cyan-600 hover:bg-cyan-700 cursor-pointer">
+                                Lägg till i kundvagnen
+                            </button>
+                            <div class="h-12 w-full font-bold bg-green-600 flex items-center justify-center">
+                                <i class="fa-solid fa-check fa-lg text-white"></i>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="grow overflow-hidden rounded-full shadow h-12 w-full">
+                        <div class="h-24 w-full">
+                            <button disabled class="h-12 w-full font-bold text-gray-100 bg-gray-400">
+                                Lägg till i kundvagnen
+                            </button>
+                            <div class="h-12 w-full font-bold bg-green-600 flex items-center justify-center">
+                                <i class="fa-solid fa-check fa-lg text-white"></i>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <!-- <hr class="w-full h-px bg-gray-300 border-0"> -->
+        <div class="grid md:grid-cols-3 sm:grid-cols-2 gap-8 w-full">
+            <div class="bg-white text-gray-600 shadow rounded-xl transition duration-100 hover:shadow-lg w-full relative">
+                <button class="w-full">
+                    <img src="img/apple.jpg" alt="apple" class="w-full h-44 object-cover rounded-t-xl">
+                </button>
+                
+                <div class="m-4 mt-2 flex flex-col gap-2">
+                    <div class="flex justify-between items-center">
+                        <a href="" class="text-lg font-bold text-gray-600 hover:text-gray-800">
+                            Äpple
+                        </a>
+                        <button class="bg-cyan-600 size-10 rounded aspect-square flex justify-center items-center hover:bg-cyan-700 default-transition">
+                            <i class="fa-solid fa-basket-shopping fa-lg text-white"></i>
+                        </button>
+                    </div>
+                    
+                    <div class="flex justify-between items-center -mb-2">
+                        <div class="relative">
+                            <!-- <p class="absolute text-gray-400 -top-2 text-xs line-through">
+                                29 kr
+                            </p> -->
+                            <p class="text-lg font-semibold text-gray-600">
+                                49 kr
+                            </p>
+                        </div>
+                        <div class="flex items-center gap-1 ">
+                            <svg class="size-5 stroke-green-600" data-slot="icon" fill="none" stroke-width="2" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+                                <path stroke-linecap="round" stroke-linejoin="round" d="M9 12.75 11.25 15 15 9.75M21 12a9 9 0 1 1-18 0 9 9 0 0 1 18 0Z"></path>
+                              </svg>
+                            <p><span class="font-semibold">84 st</span> i lager</p>
+                        </div>
+                    </div>
+                </div>
+                <!-- <div class="sale-sticker">
+                    <p>
+                        -20 kr
+                    </p>
+                </div> -->
+            </div>
+            <div class="bg-white text-gray-600 shadow rounded-xl transition duration-100 hover:shadow-lg w-full relative">
+                <button class="w-full">
+                    <img src="img/bonsai-sm.jpg" alt="apple" class="w-full h-44 object-cover rounded-t-xl">
+                </button>
+                
+                <div class="m-4 mt-2 flex flex-col gap-2">
+                    <div class="flex justify-between items-center">
+                        <a href="" class="text-lg font-bold text-gray-600 hover:text-gray-800">
+                            Bonsaiträd
+                        </a>
+                        <button class="bg-gray-300 size-10 rounded aspect-square flex justify-center items-center" disabled>
+                            <i class="fa-solid fa-basket-shopping fa-lg text-white"></i>
+                        </button>
+                    </div>
+                    
+                    <div class="flex justify-between items-center -mb-2">
+                        <div class="relative">
+                            <!-- <p class="absolute text-gray-400 -top-2 text-xs line-through">
+                                29 kr
+                            </p> -->
+                            <p class="text-lg font-semibold text-gray-600">
+                                249 kr
+                            </p>
+                        </div>
+                        <div class="flex items-center gap-1 ">
+                            <svg class="size-5 stroke-red-400" data-slot="icon" fill="none" stroke-width="2" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+                                <path stroke-linecap="round" stroke-linejoin="round" d="m9.75 9.75 4.5 4.5m0-4.5-4.5 4.5M21 12a9 9 0 1 1-18 0 9 9 0 0 1 18 0Z"></path>
+                              </svg>
+                            <p><span class="font-semibold">0 st</span> i lager</p>
+                        </div>
+                    </div>
+                </div>
+                <!-- <div class="sale-sticker">
+                    <p>
+                        -20 kr
+                    </p>
+                </div> -->
+            </div>
+            <div class="bg-white text-gray-600 shadow rounded-xl transition duration-100 hover:shadow-lg w-full relative">
+                <img src="img/cat-sm.jpg" alt="apple" class="w-full h-44 object-cover rounded-t-xl">
+                <div class="m-4 flex flex-col gap-2">
+                    <div class="flex justify-between items-center">
+                        <a href="" class="text-lg font-bold text-gray-600 hover:text-gray-800">
+                            Katt
+                        </a>
+                        <button class="bg-cyan-600 size-10 rounded aspect-square flex justify-center items-center hover:bg-cyan-700 default-transition">
+                            <i class="fa-solid fa-basket-shopping fa-lg text-white"></i>
+                        </button>
+                    </div>
+                    <div class="flex justify-between items-center -mb-1">
+                        <div class="relative">
+                            <p class="absolute text-gray-400 -top-2 text-xs line-through">
+                                49 kr
+                            </p>
+                            <p class="text-lg font-bold text-red-600">
+                                29 kr
+                            </p>
+                        </div>
+                        <div class="flex items-center gap-1 ">
+                            <svg class="size-5 stroke-green-600" data-slot="icon" fill="none" stroke-width="2" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+                                <path stroke-linecap="round" stroke-linejoin="round" d="M9 12.75 11.25 15 15 9.75M21 12a9 9 0 1 1-18 0 9 9 0 0 1 18 0Z"></path>
+                              </svg>
+                            <p><span class="font-semibold">22 st</span> i lager</p>
+                        </div>
+                    </div>
+                </div>
+                <div class="absolute -top-2 -right-2 bg-red-600 rounded-full aspect-square text-white text-lg font-semibold p-1 flex flex-col justify-center items-center rotate-6 opacity-90 border-2 border-white shadow-md">
+                    <p>
+                        -20 kr
+                    </p>
+                </div>
+            </div>
+            <div class="bg-white text-gray-600 shadow rounded-xl transition duration-100 hover:shadow-lg w-full relative">
+                <img src="img/car-sm.jpg" alt="apple" class="w-full h-44 object-cover">
+                <div class="m-4">
+                    <p class="text-lg font-bold text-gray-600">Bil</p>
+                    <p class="text-sm">200 000 kr</p>
+                </div>
+            </div>
+        </div>
+    </main>
+</body>
+<script>
+    document.getElementById('cartButton').addEventListener('click', function() {
+        var animationContainer = document.getElementById('animationContainer');
+        animationContainer.classList.remove('animate-end');
+        animationContainer.classList.add('animate-start');
+        setTimeout(function() {
+            animationContainer.classList.remove('animate-start');
+            animationContainer.classList.add('animate-end');
+        }, 2000);
+        setTimeout(function() {
+            animationContainer.classList.remove('animate-end');
+        }, 2500);
+    });
+  </script>
+</html>

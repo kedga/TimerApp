@@ -1,0 +1,146 @@
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <!-- <link rel="stylesheet" href="https://localhost:7084/output.css"> -->
+    <script src="https://cdn.tailwindcss.com"></script>
+</head>
+<body class="bg-gray-50 flex flex-col items-center">
+    <header class="fixed top-0 w-full text-gray-700 shadow bg-white z-50">
+        <nav class="mx-auto px-8 h-16 flex items-center gap-2 w-full max-w-5xl justify-between text-lg font-semibold">
+            <a class="hover:underline" href="index.html">
+                Produkter
+            </a>
+            
+            <div class="flex items-center gap-1">
+                <span>Valuta:</span>
+                <select class="hover:underline cursor-pointer" id="currency" name="currency">
+                    <option value="SEK">SEK</option>
+                    <option value="EUR">EUR</option>
+                    <option value="USD">USD</option>
+                    <option value="GBP">GBP</option>
+                </select>
+                <!-- <span class="fi fi-se fi"></span> -->
+            </div>
+            
+            <div class="hidden">
+                <a class="pr-2 border-r hover:underline" href="">
+                    Logga in
+                </a>
+                <a class="pl-3 hover:underline" href="">
+                    Registrera dig<span class="fi fi-gr fis"></span>
+                </a>
+            </div>
+            
+            <div class="flex flex-col items-end border-l pl-5 text-base">
+                <p class="">
+                    Inloggad: apansfarmor@apa.com
+                </p>
+                <div class="w-full flex justify-end gap-4">
+                    <a class="hover:underline text-cyan-600 hover:text-cyan-700" href="cart.html">
+                        Kundvagn
+                    </a>
+                    <button href="" class="hover:underline text-gray-400 hover:text-gray-700">Logga ut</button>
+                </div>
+                
+            </div>
+        
+        </nav>
+    </header>
+
+    <main class="mt-16 p-8 flex flex-col items-center gap-8 w-full max-w-7xl text-gray-500">
+        <h2 class="text-4xl font-semibold text-gray-700 text-center">
+            Tack för din beställning!
+        </h2>
+        <p>Se orderdetaljer nedan</p>
+        <div class="w-full max-w-xl flex flex-col gap-4 p-4 rounded-xl bg-white shadow text-gray-700">
+            <div>
+                <div class="flex justify-between">
+                    <p class="font-semibold">
+                        December 24, 2024
+                    </p>
+                    <p>
+                        <span class="font-semibold">Ordernummer:</span> 6969420
+                    </p>
+                </div>
+                <div class="flex justify-end gap-4">
+                    <p>
+                        <span class="font-semibold">Status:</span> Skickas snart
+                    </p>
+                </div>
+            </div>
+
+            <hr>
+
+            <div>
+                <p class="font-semibold mb-2">Leveransadress</p>
+                <p class="">Benjamin Eriksson</p>
+                <p>Dörrvägen 14</p>
+                <p>122 44 Enskede</p>
+            </div>
+
+            <hr>
+           
+            <div class="flex gap-4">
+                <img class="size-24 object-cover rounded-xl shrink-0" src="./img/cat-sm.jpg" alt="kitty">
+                <div class="flex flex-col justify-between gap-2 grow">
+                    <div class="flex flex-col">
+                        <h3 class="text-xl font-semibold">
+                            Cat
+                        </h3>
+                        <p>25 kr / st</p>
+                    </div>
+                    <div class="flex justify-between font-semibold">
+                        <p>2 st</p>
+                        <p class="text-nowrap">
+                            50 kr
+                        </p>
+                    </div>
+                </div>
+            </div>
+
+            <div class="flex gap-4">
+                <img class="size-24 object-cover rounded-xl shrink-0" src="./img/bonsai-sm.jpg" alt="kitty">
+                <div class="flex flex-col justify-between gap-2 grow">
+                    <div class="flex justify-between items-baseline">
+                        <h3 class="text-2xl">
+                            Bonsai tree
+                        </h3>
+                    </div>
+                    <div class="flex justify-between">
+                        <p>2 st</p>
+                        <p class="text-nowrap">
+                            100 kr
+                        </p>
+                    </div>
+                </div>
+            </div>
+
+            <hr>
+
+            <div class="flex flex-col gap-2">
+                <div class="flex justify-between">
+                    <p>
+                        Frakt
+                    </p>
+                    <p>
+                        50 kr
+                    </p>
+                </div>
+                <div class="flex justify-between font-semibold text-lg">
+                    <p>
+                        Totalsumma
+                    </p>
+                    <p>
+                        200 kr
+                    </p>
+                </div>
+            </div>
+
+        </div>
+
+    </main>
+    
+</body>
+</html>

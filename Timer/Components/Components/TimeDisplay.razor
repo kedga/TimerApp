@@ -1,0 +1,10 @@
+﻿
+
+<span class="font-mono @TextSizes[TextSize]">@Number</span><span class="font-normal font-sans @TextSizes[TextSize - 2]">@String</span>
+
+@code {
+	[Parameter] public int Number { get; set; }
+	[Parameter] public string String { get; set; } = string.Empty;
+	[Parameter] public int TextSize { get; set; }
+	[Parameter] public Dictionary<double, string> TextSizes { get; set; } = new();
+}
