@@ -10,6 +10,9 @@ export default {
   ],
   theme: {
     extend: {
+      fontFamily: {
+          montserrat: ["Montserrat"],
+      },
       colors: {
         neutral: colors.teal,
         running: colors.orange,
